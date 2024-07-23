@@ -104,18 +104,19 @@ function Wheel_Zoom(wheel)
 		wheel = 0
 		for i, id_instance in ipairs(systeme) do
 			tmp = lua_lire_systeme(i,"id_instance")
+			local comp_url = msg.url(nil, tmp, "sprite")
+			local comp_url2 = msg.url(nil, tmp, "sprite_close")
 			if zoom_state > 5 then
-				sprite.set_constant(tmp.."#sprite_close", "tint", vmath.vector4(1, 1, 1, 1))
-				sprite.set_constant(tmp.."#sprite", "tint", vmath.vector4(1, 1, 1, 0))
+				sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 1))
+				sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 0))
 			else
-				sprite.set_constant(tmp.."#sprite_close", "tint", vmath.vector4(1, 1, 1, 0))
-				sprite.set_constant(tmp.."#sprite", "tint", vmath.vector4(1, 1, 1, 1))
+				sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 0))
+				sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 1))
 			end
-			pprint(tmp)
-			go.set(tmp.."#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
-			go.set(tmp.."#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
-			go.set(tmp.."#sprite_close", "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
-			go.set(tmp.."#sprite_close", "scale.x", 0.25*(math.pow(zoom_gap, -zoom_state)))
+			go.set(comp_url, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set(comp_url, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set(comp_url2, "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
+			go.set(comp_url2, "scale.x", 0.25*(math.pow(zoom_gap, -zoom_state)))
 			go.set("/curseur#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
 			go.set("/curseur#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
 		end
@@ -123,17 +124,19 @@ function Wheel_Zoom(wheel)
 		wheel = 0
 		for i, id_instance in ipairs(systeme) do
 			tmp = lua_lire_systeme(i,"id_instance")
+			local comp_url = msg.url(nil, tmp, "sprite")
+			local comp_url2 = msg.url(nil, tmp, "sprite_close")
 			if zoom_state < 6 then
-				sprite.set_constant(tmp.."#sprite_close", "tint", vmath.vector4(1, 1, 1, 0))
-				sprite.set_constant(tmp.."#sprite", "tint", vmath.vector4(1, 1, 1, 1))
+				sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 0))
+				sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 1))
 			else
-				sprite.set_constant(tmp.."#sprite_close", "tint", vmath.vector4(1, 1, 1, 1))
-				sprite.set_constant(tmp.."#sprite", "tint", vmath.vector4(1, 1, 1, 0))
+				sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 1))
+				sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 0))
 			end
-			go.set(tmp.."#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
-			go.set(tmp.."#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
-			go.set(tmp.."#sprite_close", "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
-			go.set(tmp.."#sprite_close", "scale.x", 0.25*(math.pow(zoom_gap, -zoom_state)))
+			go.set(comp_url, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set(comp_url, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set(comp_url2, "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
+			go.set(comp_url2, "scale.x", 0.25*(math.pow(zoom_gap, -zoom_state)))
 			go.set("/curseur#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
 			go.set("/curseur#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
 		end
