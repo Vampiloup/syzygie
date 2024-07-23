@@ -7,8 +7,6 @@ function init(self)
 	self.collision_id = nil
 	self.gui_clicked = {systeme = nil}
 
-	-- prepare the wheel function to accept inputs
-
 end
 
 function update(self, dt)
@@ -113,6 +111,7 @@ function Wheel_Zoom(wheel)
 				sprite.set_constant(tmp.."#sprite_close", "tint", vmath.vector4(1, 1, 1, 0))
 				sprite.set_constant(tmp.."#sprite", "tint", vmath.vector4(1, 1, 1, 1))
 			end
+			pprint(tmp)
 			go.set(tmp.."#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
 			go.set(tmp.."#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
 			go.set(tmp.."#sprite_close", "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
