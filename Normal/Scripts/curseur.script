@@ -1,0 +1,148 @@
+require "Normal.Luas.serveur_variables"
+
+function init(self)
+
+	msg.post(".", "acquire_input_focus")
+
+	self.collision_id = nil
+	self.gui_clicked = {systeme = nil}
+
+	-- prepare the wheel function to accept inputs
+
+end
+
+function update(self, dt)
+
+	
+	--get the current position of the cursor
+	--local pos = go.get_position("/camera#camera")
+	--local pos = vmath.vector3(pos.x, pos.y, 1)
+	--go.set_position(pos)
+	--local action_x, action_y = screen_to_world(pos.x, pos.y, pos.z)
+
+	
+	-- reset the control variable for collision_id each frame
+
+	-- update de Defold cursor Game Object position to be the same as the current position of the machine cursor
+	--local pos_x, pos_y, pos_z = screen_to_world(action.x, action.y, 1)
+	--local action_pos = vmath.vector3(pos_x, pos_y, 1)
+	--local action_pos = vmath.vector3(action.x, action.y, 1)
+	--go.set_position(action_pos)
+	
+	
+end
+
+function on_message(self, message_id, message, sender)
+
+	if message_id == hash("debut_camera") then
+		local pos = message.position
+		local pos = vmath.vector3(pos.x, pos.y, 9)
+		go.set_position(pos)
+
+	end
+
+	-- Zoom function from Camera.script signal its activation
+	if message_id == hash("wheel") then
+		Wheel_Zoom(message["wheel"]) 
+	end
+	
+	-- When Star object enter or leave collision with cursor, send here a message with ID from star, or "nil"
+	if message_id == hash("etoile_click") then
+		if message.click == true then
+			self.collision_id = message
+		else
+			self.collision_id = nil
+		end
+	end
+
+end
+
+function on_input(self, action_id, action)
+
+	local action_pos = vmath.vector3(action.x, action.y, 9)
+	local action_x, action_y = screen_to_world(action_pos.x, action_pos.y, 9)
+	local action_pos_screen = vmath.vector3(action_x, action_y, 9)
+	go.set_position(action_pos_screen)
+
+	if action.pressed and action_id == hash("touch") then
+
+		-- Only look for what object (star or between stars) is clicked IF cursor is NOT in Gui box "Fond".
+		if Gui_entered == nil then
+			if self.collision_id ~= nil then
+				msg.post("/Gui_Systeme#Systeme", "etoile_click", {id = self.collision_id.id})
+				self.gui_clicked.systeme_clicked = self.collision_id.id
+			elseif self.collision_id == nil then
+				msg.post("/Gui_Systeme#Systeme", "etoile_click", {id = nil})
+				self.gui_clicked.systeme_clicked = nil
+			end
+			
+		end
+		
+	end
+
+	
+
+end
+
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end
+
+
+function final(self)
+end
+
+function fixed_update(self, dt)
+
+end
+
+
+function Wheel_Zoom(wheel)
+
+		if wheel == 1 and zoom_state <= zoom_max then
+		wheel = 0
+		for i, id_instance in ipairs(systeme) do
+			tmp = lua_lire_systeme(i,"id_instance")
+			if zoom_state > 5 then
+				sprite.set_constant(tmp.."#sprite_close", "tint", vmath.vector4(1, 1, 1, 1))
+				sprite.set_constant(tmp.."#sprite", "tint", vmath.vector4(1, 1, 1, 0))
+			else
+				sprite.set_constant(tmp.."#sprite_close", "tint", vmath.vector4(1, 1, 1, 0))
+				sprite.set_constant(tmp.."#sprite", "tint", vmath.vector4(1, 1, 1, 1))
+			end
+			go.set(tmp.."#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set(tmp.."#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set(tmp.."#sprite_close", "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
+			go.set(tmp.."#sprite_close", "scale.x", 0.25*(math.pow(zoom_gap, -zoom_state)))
+			go.set("/curseur#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set("/curseur#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
+		end
+	elseif wheel == 2 and zoom_state >= zoom_min then
+		wheel = 0
+		for i, id_instance in ipairs(systeme) do
+			tmp = lua_lire_systeme(i,"id_instance")
+			if zoom_state < 6 then
+				sprite.set_constant(tmp.."#sprite_close", "tint", vmath.vector4(1, 1, 1, 0))
+				sprite.set_constant(tmp.."#sprite", "tint", vmath.vector4(1, 1, 1, 1))
+			else
+				sprite.set_constant(tmp.."#sprite_close", "tint", vmath.vector4(1, 1, 1, 1))
+				sprite.set_constant(tmp.."#sprite", "tint", vmath.vector4(1, 1, 1, 0))
+			end
+			go.set(tmp.."#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set(tmp.."#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set(tmp.."#sprite_close", "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
+			go.set(tmp.."#sprite_close", "scale.x", 0.25*(math.pow(zoom_gap, -zoom_state)))
+			go.set("/curseur#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
+			go.set("/curseur#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
+		end
+	end
+
+	-- Signal to camera.script that Cursor changed stuff from zoom
+	msg.post("/camera", "wheel_retour", {wheel_retour = 0})	
+
+end
+
+

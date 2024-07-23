@@ -1,0 +1,22 @@
+[bootstrap]
+main_collection = /Normal/main/main.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 1920
+height = 1080
+
+[android]
+input_method = HiddenInputField
+
+[project]
+title = Syzygie
+
+[sprite]
+max_count = 1024
+
+[physics]
+max_collision_object_count = 1024
+

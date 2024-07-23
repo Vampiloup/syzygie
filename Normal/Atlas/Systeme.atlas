@@ -1,0 +1,62 @@
+images {
+  image: "/Normal/Images/systeme/couronne_blanc.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/couronne_bleu.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/couronne_cyan.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/couronne_jaune.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/couronne_orange.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/couronne_rouge.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/couronne_violet.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/etoile_blanc.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/etoile_bleu.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/etoile_cyan.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/etoile_jaune.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/etoile_orange.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/etoile_rouge.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/Normal/Images/systeme/etoile_violet.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+margin: 0
+extrude_borders: 2
+inner_padding: 0
+max_page_width: 0
+max_page_height: 0
+rename_patterns: ""

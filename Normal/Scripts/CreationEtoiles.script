@@ -1,0 +1,62 @@
+require "Normal.Luas.serveur_variables"
+require "Normal.Luas.Generation_Nom_Etoiles"
+
+function init(self)
+
+	msg.post(".", "acquire_input_focus")
+	
+	-- Ask for creating System table
+	lua_prepare()
+	
+	math.randomseed(os.time())
+
+	-- Create Stars (etoiles)
+	for i = 1, Nombre_Etoiles do
+		self.id = i
+
+		repeat
+
+			local distance = true
+			local x1 = math.random(100, map_X-100)
+			local y1 = math.random(100, map_Y-100)
+			pos = vmath.vector3(x1, y1, 1)
+				-- check if the actual positions interpolate with the other already created systemes. Start at 2 because the first has no "others systems" to check
+			if i > 1 then
+				for j = 1, i-1 do
+					posJ = lua_lire_systeme(j, "pos")
+					length = vmath.length(pos - posJ)
+					if length < 64 then
+						distance = false
+					end
+				end
+			end				
+		until (distance == true)
+
+
+		idf = factory.create("#factory", pos, nil, { id = self.id }, 1)
+		lua_ecrire_systeme(self.id, "id_instance", idf)
+		
+		-- populate the Table about star systems
+
+		
+		lua_ecrire_systeme(self.id, "pos", pos)
+		
+	end
+
+	creation_finished = true
+	pprint ("Creation finished ", creation_finished)
+
+end
+
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+
+	
+end
+
