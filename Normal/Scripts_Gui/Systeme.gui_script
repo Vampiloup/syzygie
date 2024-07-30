@@ -14,6 +14,9 @@ function init(self)
 	gui.animate(node2, "scale", 1.5, gui.EASING_LINEAR, 5, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 
 
+	-- initialize variable for planet screen existing or not
+	Is_planet_screen_exist = false
+	
 	--gui root box position.
 	
 	-- Actuall size of the game's screen 
@@ -46,10 +49,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("etoile_click") then
 		local node = gui.get_node('Systeme')
 		if message.id ~= nil then
+			-- Gui = systeme bar ?
 			gui.set_enabled(node, true)
 			change_contenu(message.id)
-			Gui_entered = node
+			Gui_entered = node			
 		else
+			fermer_ecran_planete()
 			gui.set_enabled(node, false)
 			Gui_entered = nill
 		end
@@ -57,14 +62,16 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	
+
+	node_orbite_entered = {}
 	-- If cursor on top of Fond gui node, change the "don't activate click on objects" variable "Gui_entered "
 
 	local node = gui.get_node('Systeme')
-	
+
+	-- list of enabled GUI nodes possibles
 	node_enabled = gui.is_enabled(node)
 	node_entered = gui.pick_node(node, action.x, action.y)
-	
+
 
 	if node_entered and node_enabled then 
 		Gui_entered = node
@@ -75,9 +82,23 @@ function on_input(self, action_id, action)
 	if action.pressed  and action_id == hash("touch") then
 		if node_entered and node_enabled then
 			print ("node entered and enabled (Systeme.gui_script)")
+			-- If System bar GUI entered AND clicked, look if one of the Orbit "Buttons" are clicked
+			local orbit_clicked = 0
+			for i = 1, Systeme_Orbits do
+				node2 = gui.get_node("bouton_orbit_"..i)
+				if gui.pick_node(node2, action.x, action.y) then
+					orbit_clicked = i
+				end
+			end
+			if orbit_clicked > 0 then
+				ouvrir_ecran_planete(orbit_clicked)
+			else
+				fermer_ecran_planete()
+			end
 		end
 
 		msg.post("/curseur", "gui_pass", {pass = true})
+
 
 	end
 
@@ -99,6 +120,35 @@ function on_reload(self)
 	-- Remove this function if not needed
 end
 
+function ouvrir_ecran_planete(orbite)
+	fermer_ecran_planete()
+	Is_planet_screen_exist = true
+	-- Placing the "click zone" from each orbit (the black rectangle zone, basically)
+	local ecran_planete_pos = vmath.vector3(1120, -580, 0)
+	local ecran_planete_size = vmath.vector3(1580, 1000, 0)
+	local ecran_planete = gui.new_box_node(ecran_planete_pos,ecran_planete_size)
+	local node_parent = gui.get_node("Systeme")
+	gui.set_parent(ecran_planete, node_parent)
+	gui.set_layer(ecran_planete, "Fond")
+	gui.set_alpha(ecran_planete, 0.0)
+	gui.set_id(ecran_planete, "ecran_planete_"..0)
+	gui.set_texture(ecran_planete, "Interface")
+	gui.play_flipbook(ecran_planete, "systeme_panneau_planete")
+	gui.set_color(ecran_planete, vmath.vector4(255/255, 255/255, 255/255, 1))
+	
+	
+end
+
+function fermer_ecran_planete()
+	-- Destroy the pre-existing "planet screen"
+	if Is_planet_screen_exist == true then
+		local node_boite = gui.get_node("ecran_planete_0")
+		gui.delete_node(node_boite)
+		Is_planet_screen_exist = false
+	end
+end
+	
+
 function change_contenu(id)
 
 	local couleur = lua_lire_systeme(id, "couleur")
@@ -106,8 +156,8 @@ function change_contenu(id)
 	--pprint (systeme[id])
 
 	-- show characteristics of the star
-	a = lua_lire_systeme(id, "nom")
-	node = gui.get_node("text")
+	local a = lua_lire_systeme(id, "nom")
+	local node = gui.get_node("text")
 	gui.set_text(node, a)
 	node = gui.get_node("Image_etoile")
 	gui.set_texture(node, "Systeme")
@@ -118,7 +168,7 @@ function change_contenu(id)
 
 	-- show objects (planets) list in the system box
 	-- Destroy the pre-existing orbitals boxes
-	node_boite = gui.get_node("boite_orbites")
+	local node_boite = gui.get_node("boite_orbites")
 	gui.delete_node(node_boite)
 	-- Create new Orbitals box
 	node = gui.get_node("Systeme")
@@ -127,13 +177,26 @@ function change_contenu(id)
 	local node_boite = gui.new_box_node(pos,size)
 	gui.set_id(node_boite, "boite_orbites")
 	gui.set_parent(node_boite, node)
-	
-	--pprint (systeme[id])
 
+	
+	
 	for i = 1, Systeme_Orbits do
 		local posY = -225 - (i-1)*150
+
+		-- Placing the "click zone" from each orbit (the black rectangle zone, basically)
+		local button_pos = vmath.vector3(32, posY-40, 0)
+		local button_size = vmath.vector3(265, 80, 0)
+		local node_orbit = gui.new_box_node(button_pos,button_size)
+		gui.set_color(node_orbit, vmath.vector4(255/255, 0/255, 0/255, 1))
+		gui.set_pivot(node_orbit, gui.PIVOT_W)
+		gui.set_parent(node_orbit, node_boite)
+		gui.set_layer(node_orbit, "Texte")
+		gui.set_alpha(node_orbit, 0.0)
+		gui.set_id(node_orbit, "bouton_orbit_"..i)
+		
+		
 		-- Text indicating type of orbital object 
-		tmp = liste_orbitals[lua_lire_systeme(id, "orbite_"..i)]["nom"]
+		local tmp = liste_orbitals[lua_lire_systeme(id, "orbite_"..i)]["nom"]
 		local pos_type = vmath.vector3(110, posY-20, 0)
 		local node2_texte = gui.new_text_node(pos_type,tmp)
 		gui.set_id(node2_texte, "texte_orbit"..i)
@@ -142,13 +205,37 @@ function change_contenu(id)
 		gui.set_pivot(node2_texte, gui.PIVOT_W)
 		-- Text indicating size of orbital object
 		if  #liste_orbitals[lua_lire_systeme(id, "orbite_"..i)]["taille"] > 0 then
-			nom_taille =  liste_orbitals[lua_lire_systeme(id, "orbite_"..i)]["taille"][lua_lire_systeme(id, "orbite_"..i.."_taille")]
-			local pos = vmath.vector3(130, posY-44, 0)
+			local nom_taille =  liste_orbitals[lua_lire_systeme(id, "orbite_"..i)]["taille"][lua_lire_systeme(id, "orbite_"..i.."_taille")]
+			pos = vmath.vector3(130, posY-44, 0)
 			local node_taille_texte = gui.new_text_node(pos,nom_taille)
 			gui.set_id(node_taille_texte, "texte_orbit_size"..i)
 			gui.set_parent(node_taille_texte, node_boite)
 			gui.set_layer(node_taille_texte, "Texte")
 			gui.set_pivot(node_taille_texte, gui.PIVOT_W)
+
+			-- text indicating humidity of orbit
+			local nom_humidite =  lua_SV_wetness_orbit["nom"][lua_lire_systeme(id, "orbite_"..i.."_humidite")]
+			pos = vmath.vector3(200, posY-60, 0)
+			local node_humidite_texte = gui.new_text_node(pos,nom_humidite)
+			gui.set_color(node_humidite_texte, vmath.vector4(0/255, 255/255, 0/255, 1))
+			gui.set_id(node_humidite_texte, "texte_orbit_size"..i)
+			gui.set_id(node_humidite_texte, "texte_orbit_size"..i)
+			gui.set_parent(node_humidite_texte, node_boite)
+			gui.set_layer(node_humidite_texte, "Texte")
+			gui.set_pivot(node_humidite_texte, gui.PIVOT_W)			
+		end
+		-- text indicating temperature of orbit
+		local nom_temperature =  couleur_temp[0]["nom"][lua_lire_systeme(id, "orbite_"..i.."_temp")]
+		pos = vmath.vector3(100, posY-60, 0)
+		local node_temperature_texte = gui.new_text_node(pos,nom_temperature)
+		gui.set_color(node_temperature_texte, vmath.vector4(255/255, 255/255, 0/255, 1))
+		gui.set_id(node_temperature_texte, "texte_orbit_size"..i)
+		gui.set_id(node_temperature_texte, "texte_orbit_size"..i)
+		gui.set_parent(node_temperature_texte, node_boite)
+		gui.set_layer(node_temperature_texte, "Texte")
+		gui.set_pivot(node_temperature_texte, gui.PIVOT_W)
+		if  #liste_orbitals[lua_lire_systeme(id, "orbite_"..i)]["taille"] == 0 then
+			gui.set_alpha(node_temperature_texte, 0.3)
 		end
 
 	end

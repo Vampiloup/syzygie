@@ -64,6 +64,8 @@ function on_input(self, action_id, action)
 
 	if action.pressed and action_id == hash("touch") then
 
+		--pprint(Is_planet_screen_exist)
+
 		-- Only look for what object (star or between stars) is clicked IF cursor is NOT in Gui box "Fond".
 		if Gui_entered == nil then
 			if self.collision_id ~= nil then

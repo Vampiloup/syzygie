@@ -32,27 +32,49 @@ function init(self)
 	
 	-- Number of Elements in this star systeme
 	nb = 0
-	--print ("-----",name,"-----")
+	-- size of temp zones (orbits in each temp)
+	local zone = 0
+	local temp_chaud = math.random(0, couleur_temp[couleur]["chaud"])
+	local temp_moderate = math.random(0, couleur_temp[couleur]["chaud"]) + temp_chaud
+	local temperature = 0
+
 	for i = 1, Systeme_Orbits do
 		local orbite = math.random(1, total_orbit_chance[0])
 		orbite_nb = "orbite_"..i
-
-		i = 1
+	
+		j = 1
 		-- Look in the list of Orbitals possibilities if orbit has some object
-		while orbite > total_orbit_chance[i] do
-			i = i + 1
+		while orbite > total_orbit_chance[j] do
+			j = j + 1
 		end
-		lua_ecrire_systeme(self.id, orbite_nb, i)
+		lua_ecrire_systeme(self.id, orbite_nb, j)
 
-		-- Size of the orbital object
-		if #liste_orbitals[i]["taille"] > 0 then
-			local taille = math.random(1, #liste_orbitals[i]["taille"])
+					-- Size of the orbital object
+		if #liste_orbitals[j]["taille"] > 0 then
+			local taille = math.random(1, #liste_orbitals[j]["taille"])
 			local taille2 = orbite_nb.."_taille"
 			lua_ecrire_systeme(self.id, taille2, taille)
 		end
+	
+		-- Temperature on the orbit
+		zone = zone + 1
+		if zone <= temp_chaud then
+			temperature = 1
+		elseif zone <= temp_moderate then
+			temperature = 2
+		else
+			temperature = 3
+		end
+		local temp2 = orbite_nb.."_temp"
+		lua_ecrire_systeme(self.id, temp2, temperature)
 
+		-- Humidity of the orbital object
+		local humidite = math.random(1, #lua_SV_wetness_orbit["nom"])
+		local humidite2 = orbite_nb.."_humidite"
+		lua_ecrire_systeme(self.id, humidite2, humidite)
+		
+		
 	end
-
 end
 
 
@@ -79,7 +101,7 @@ end
 function on_message(self, message_id, message, sender)
 	
 	if message_id == hash("trigger_response") then
-		if message.enter then
+		if message.enter and Is_planet_screen_exist == false then
 			
 			-- take action for entry
 			go.set_scale(2)

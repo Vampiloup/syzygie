@@ -58,15 +58,15 @@ function lua_prepare()
 	-- Generaly, don't let curseur.script activate on_input actions, since there is a Gui element on top of it.
 	Gui_entered = nil
 
-	-- create table with colour of stars
+	-- create table with colour of stars. First is the internal name (code), second is the name as displayed
 	liste_etoiles = {"rouge","orange","jaune","blanc","cyan","bleu","violet"}
-	liste_etoiles_nom = {"Rouge","Orange","Jaune","Blanche","Cyan","Bleue","Violette"}
+	liste_etoiles_nom = {"Red","Orange","Yellow","White","Cyan","Blue","Violet"}
 	
-		-- number of zones by system
+		-- number of Orbits by system
 	Systeme_Orbits = 5
 
 	-- Size of Objects orbiting a Star
-	--liste_orbitals = {[0] = 4}
+	-- liste_orbitals = {[0] = 4}
 	liste_orbitals = {}
 	table.insert(liste_orbitals, 1, {chance = 50, nom = "", taille = {}})
 	-- Rock planets
@@ -85,6 +85,20 @@ function lua_prepare()
 	end
 	total_orbit_chance[0] = toc
 
+	-- Temp orbit according to star colour
+	couleur_temp = {}
+	table.insert(couleur_temp, 1, {chaud = 1})
+	table.insert(couleur_temp, 2, {chaud = 2})
+	table.insert(couleur_temp, 3, {chaud = 3})
+	table.insert(couleur_temp, 4, {chaud = 4})
+	table.insert(couleur_temp, 5, {chaud = 5})
+	table.insert(couleur_temp, 6, {chaud = 6})
+	table.insert(couleur_temp, 7, {chaud = 7})
+	couleur_temp[0] = {nom={"hot","moderate","cold"}}
+
+	-- Wetness (!) of orbit (planet)
+	lua_SV_wetness_orbit = {nom = {"dry","aride","wet","aquatic"}}
+	
 end
 
 -- Enter data in the Solar System table. id is the System number, message_is the name of the data, messsage its value
