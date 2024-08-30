@@ -1,6 +1,9 @@
 -- Preparing solar systemstable
 function lua_prepare()
 
+	-- Initialize gui system page variables
+	Gui_systeme = {etoile_clicked = 0, orbite_clicked = 0}
+	
 	-- zoom start
 	zoom_state = 0
 	-- zoom gap 
@@ -97,7 +100,9 @@ function lua_prepare()
 	couleur_temp[0] = {nom={"hot","moderate","cold"}}
 
 	-- Wetness (!) of orbit (planet)
-	lua_SV_wetness_orbit = {nom = {"dry","aride","wet","aquatic"}}
+	lua_SV_wetness_orbit = {nom = {"dry","aride","wet","aquatic"}, nb_zones_water = {{1,1,1},{2,1,1},{2,2,1},{2,2,2}}}
+
+
 	
 end
 

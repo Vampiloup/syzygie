@@ -45,7 +45,6 @@ function init(self)
 
 	creation_finished = true
 	pprint ("Creation finished ", creation_finished)
-
 end
 
 

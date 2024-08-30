@@ -5,7 +5,6 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 
 	self.collision_id = nil
-	self.gui_clicked = {systeme = nil}
 
 end
 
@@ -61,26 +60,22 @@ function on_input(self, action_id, action)
 	local action_x, action_y = screen_to_world(action_pos.x, action_pos.y, 9)
 	local action_pos_screen = vmath.vector3(action_x, action_y, 9)
 	go.set_position(action_pos_screen)
-
+	--print (Gui_systeme.orbite_clicked)
 	if action.pressed and action_id == hash("touch") then
-
-		--pprint(Is_planet_screen_exist)
 
 		-- Only look for what object (star or between stars) is clicked IF cursor is NOT in Gui box "Fond".
 		if Gui_entered == nil then
+			-- print (Gui_systeme.orbite_clicked)
 			if self.collision_id ~= nil then
-				msg.post("/Gui_Systeme#Systeme", "etoile_click", {id = self.collision_id.id})
-				self.gui_clicked.systeme_clicked = self.collision_id.id
+				msg.post("/Gui_Systeme#Systeme", "curseur_etoile_click", {id = self.collision_id.id})
+				--self.gui_clicked.systeme_clicked = self.collision_id.id
 			elseif self.collision_id == nil then
-				msg.post("/Gui_Systeme#Systeme", "etoile_click", {id = nil})
-				self.gui_clicked.systeme_clicked = nil
-			end
-			
+				msg.post("/Gui_Systeme#Systeme", "curseur_etoile_click", {id = nil})
+				--self.gui_clicked.systeme_clicked = nil
+			end		
 		end
 		
-	end
-
-	
+	end	
 
 end
 
