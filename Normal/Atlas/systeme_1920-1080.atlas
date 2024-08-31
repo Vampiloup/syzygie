@@ -2,12 +2,12 @@ images {
   image: "/Normal/Images/systeme_1920-1080/systeme_barre_1920-1080.png"
 }
 images {
-  image: "/Normal/Images/systeme_1920-1080/systeme_panneau_planete.png"
-}
-images {
   image: "/Normal/Images/systeme_1920-1080/default_ground.png"
 }
 images {
   image: "/Normal/Images/systeme_1920-1080/default_sea.png"
+}
+images {
+  image: "/Normal/Images/systeme_1920-1080/Systeme_panneau_orbite.png"
 }
 extrude_borders: 2

@@ -130,10 +130,6 @@ nodes {
     x: 164.0
     y: -192.0
   }
-  size {
-    x: 200.0
-    y: 100.0
-  }
   color {
     y: 0.0
     z: 0.0
@@ -144,16 +140,15 @@ nodes {
   layer: "Texte"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
+  enabled: false
+  visible: false
 }
 nodes {
   position {
     x: 320.0
   }
-  size {
-    x: 1600.0
-    y: 1080.0
-  }
   type: TYPE_BOX
+  texture: "Interface/Systeme_panneau_orbite"
   id: "Ecran_Orbite"
   xanchor: XANCHOR_LEFT
   yanchor: YANCHOR_TOP
