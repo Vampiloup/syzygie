@@ -103,7 +103,7 @@ function lua_prepare()
 	lua_SV_wetness_orbit = {nom = {"dry","aride","wet","aquatic"}, nb_zones_water = {{1,1,1},{2,1,1},{2,2,1},{2,2,2}}}
 
 	-- Zones climatiques
-	lua_zone_climatique = {"default_ground","default_sea"}
+	lua_zone_climatique = {{} ,{"default_ground","default_sea"}, {}, {}}
 	
 	
 end
@@ -112,19 +112,22 @@ end
 function lua_ecrire_systeme(id, message_id, message)
 
 	if systeme[id] then
-		systeme[id][message_id] = message
+			systeme[id][message_id] = message
 	else
 		table.insert(systeme, id, {[message_id] = message})
 	end
-
 	
 end
 
 -- read and send back a value in the Solar System table. message_id is the name of the data wanted.
-function lua_lire_systeme(id, message_id)
+function lua_lire_systeme(id, message_id,message2)
 
 	if systeme[id] then
-		return systeme[id][message_id]
+		if message2 == nil then
+			return systeme[id][message_id]
+		else
+			return systeme[id][message_id][message2]
+		end
 	else
 		print ("systeme[".. id .."] not exists")
 	end

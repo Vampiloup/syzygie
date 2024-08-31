@@ -84,8 +84,6 @@ function on_input(self, action_id, action)
 	end
 
 
-	-- print ("node " .. tostring(Gui_entered))
-
 	if action.pressed and action_id == hash("touch") then
 		if node_entered and node_enabled then
 			--	print ("node entered and enabled (Systeme.gui_script)")
@@ -139,6 +137,9 @@ function ecran_orbite(etoile, orbite)
 			gui.set_layer(node, "Groups")
 			gui.set_alpha(node, 1)
 			gui.set_id(node, "climat_"..i)
+			gui.set_texture(node, "Interface")
+			local zone = "orbite_"..i.."_zone"
+			gui.play_flipbook(node, lua_zone_climatique[lua_lire_systeme(etoile, "orbite_"..orbite)][lua_lire_systeme(etoile,"orbite_"..orbite.."_zone", i)])
 		end
 	end
 end

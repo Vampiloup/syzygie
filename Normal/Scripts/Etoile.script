@@ -73,21 +73,18 @@ function init(self)
 		local humidite2 = orbite_nb.."_humidite"
 		lua_ecrire_systeme(self.id, humidite2, humidite)
 
-		-- Zones of the orbital obect (first, land / ocean)
+		-- Zones of the orbital object (first, land / ocean)
 		local t = lua_SV_wetness_orbit["nb_zones_water"][humidite]
 		local s = {}
 		for i_zone = 1, #t do
 			s[i_zone] = t[i_zone]
 		end
 		for i_zone = #t, 2, -1 do
-			local j_zone = math.random(i)
+			local j_zone = math.random(3)
 			s[i_zone], s[j_zone] = s[j_zone], s[i_zone]
 		end
 		local zone = orbite_nb.."_zone"
 		lua_ecrire_systeme(self.id, zone, s)
-
-
-
 		
 	end
 end
