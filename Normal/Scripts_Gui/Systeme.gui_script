@@ -131,7 +131,6 @@ function ecran_orbite(etoile, orbite)
 			local pos = vmath.vector3(posX, -580, 0)
 			local size = vmath.vector3(300, 1000, 0)
 			local node = gui.new_box_node(pos,size)
-		--	gui.set_color(node, vmath.vector4((i*50)/255, 0/255, 0/255, 1))
 			gui.set_pivot(node, gui.PIVOT_W)
 			gui.set_parent(node, node_orbite)
 			gui.set_layer(node, "Groups")
@@ -141,6 +140,20 @@ function ecran_orbite(etoile, orbite)
 			local zone = "orbite_"..i.."_zone"
 			gui.play_flipbook(node, lua_zone_climatique[lua_lire_systeme(etoile, "orbite_"..orbite)][lua_lire_systeme(etoile,"orbite_"..orbite.."_zone", i)])
 		end
+		-- Placing local Orbital zone
+		local posX = -310 + 4*320
+		-- Placing the "click zone" from each orbit (the black rectangle zone, basically)
+		local pos = vmath.vector3(posX, -580, 0)
+		local size = vmath.vector3(300, 1000, 0)
+		local node = gui.new_box_node(pos,size)
+		gui.set_pivot(node, gui.PIVOT_W)
+		gui.set_parent(node, node_orbite)
+		gui.set_layer(node, "Groups")
+		gui.set_alpha(node, 1)
+		gui.set_id(node, "orbite")
+		gui.set_texture(node, "Interface")
+		local zone = "orbite__zone"
+		gui.play_flipbook(node, lua_zone_climatique[lua_lire_systeme(etoile, "orbite_"..orbite)][3])
 	end
 end
 

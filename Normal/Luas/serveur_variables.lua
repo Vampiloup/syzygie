@@ -102,8 +102,14 @@ function lua_prepare()
 	-- Wetness (!) of orbit (planet)
 	lua_SV_wetness_orbit = {nom = {"dry","aride","wet","aquatic"}, nb_zones_water = {{1,1,1},{2,1,1},{2,2,1},{2,2,2}}}
 
-	-- Zones climatiques
-	lua_zone_climatique = {{} ,{"default_ground","default_sea"}, {}, {}}
+	-- Zones climatiques (land / sea / orbit)
+	lua_zone_climatique = {
+		{"default_espace","default_espace","default_espace","default_espace"},
+		{"default_ground", "default_sea", "default_orbit"},
+		{},
+		{"default_asteroid", "default_asteroid", "default_asteroid", "default_asteroid"}
+	}
+
 	
 	
 end
