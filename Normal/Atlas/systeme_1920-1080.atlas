@@ -19,4 +19,13 @@ images {
 images {
   image: "/Normal/Images/systeme_1920-1080/default_espace.png"
 }
+images {
+  image: "/Normal/Images/systeme_1920-1080/default_gaz-giant_01.png"
+}
+images {
+  image: "/Normal/Images/systeme_1920-1080/default_gaz-giant_02.png"
+}
+images {
+  image: "/Normal/Images/systeme_1920-1080/default_gaz-giant_03.png"
+}
 extrude_borders: 2
