@@ -126,22 +126,22 @@ function ecran_orbite(etoile, orbite)
 		gui.set_enabled(node_orbite, false)
 	else
 		if lua_lire_systeme(etoile, "orbite_"..orbite) == 1 then
-			pprint ("Espace libre")
+			-- to Free Space
 			zone = ecran_espace(etoile, orbite)
 		elseif lua_lire_systeme(etoile, "orbite_"..orbite) == 2 then
-			pprint ("Rock planet")
+			-- to Rock Planet
 			zone = ecran_rock_planet(etoile, orbite)
 		elseif	lua_lire_systeme(etoile, "orbite_"..orbite) == 3 then
-			pprint ("Gaz planet")
+			-- to Gaz Planet
 			zone = ecran_gaz_planet(etoile, orbite)
 		elseif	lua_lire_systeme(etoile, "orbite_"..orbite) == 4 then
-			pprint ("Asteroids")
+			-- to Asteroid
 			zone = ecran_asteroids(etoile, orbite)
 		else
 			pprint ("Type d'orbite inconnu")
 		end
 		gui.set_enabled(node_orbite, true)
-		for i = 1, 3 do
+		for i = 1, 4 do
 			local posX = -310 + i*320
 			-- Placing the "click zone" from each orbit (the black rectangle zone, basically)
 			local pos = vmath.vector3(posX, -580, 0)
@@ -156,25 +156,11 @@ function ecran_orbite(etoile, orbite)
 			--local zone = "orbite_"..i.."_zone"
 			gui.play_flipbook(node, zone[i])
 --			gui.play_flipbook(node, lua_zone_climatique[lua_lire_systeme(etoile, "orbite_"..orbite)][lua_lire_systeme(etoile,"orbite_"..orbite.."_zone", i)])
-			end
-		-- Placing local Orbital zone
-		local posX = -310 + 4*320
-		-- Placing the "click zone" from each orbit (the black rectangle zone, basically)
-		local pos = vmath.vector3(posX, -580, 0)
-		local size = vmath.vector3(300, 1000, 0)
-		local node = gui.new_box_node(pos,size)
-		gui.set_pivot(node, gui.PIVOT_W)
-		gui.set_parent(node, node_orbite)
-		gui.set_layer(node, "Groups")
-		gui.set_alpha(node, 1)
-		gui.set_id(node, "orbite")
-		gui.set_texture(node, "Interface")
-		--local zone = "orbite__zone"
-		gui.play_flipbook(node, zone[4])
---		gui.play_flipbook(node, lua_zone_climatique[lua_lire_systeme(etoile, "orbite_"..orbite)][3])
+		end
 	end
 end
 
+-- Orbit object fixed. All the same
 function ecran_espace(etoile, orbite)
 	local zone = {}
 	zone[1] = lua_zone_climatique[1][1]
@@ -184,6 +170,7 @@ function ecran_espace(etoile, orbite)
 	return zone
 end
 
+-- Orbit object depend on Temp
 function ecran_rock_planet(etoile, orbite)
 	local zone = {}
 	zone[1] = lua_zone_climatique[lua_lire_systeme(etoile, "orbite_"..orbite)][lua_lire_systeme(etoile,"orbite_"..orbite.."_zone", 1)]
@@ -193,6 +180,7 @@ function ecran_rock_planet(etoile, orbite)
 	return zone
 end
 
+-- Orbit object fixed, in the order from lua_zone_climatique
 function ecran_gaz_planet(etoile, orbite)
 	local zone = {}
 	zone[1] = lua_zone_climatique[3][1]
@@ -202,12 +190,17 @@ function ecran_gaz_planet(etoile, orbite)
 	return zone
 end
 
+-- Orbit object from size
 function ecran_asteroids(etoile, orbite)
 	local zone = {}
-	zone[1] = lua_zone_climatique[4][1]
-	zone[2] = lua_zone_climatique[4][1]
-	zone[3] = lua_zone_climatique[4][1]
-	zone[4] = lua_zone_climatique[4][2]
+	pprint(lua_lire_systeme(etoile, "orbite_"..orbite.."_taille"))
+	for i = 1, 4 do
+		if lua_lire_systeme(etoile, "orbite_"..orbite.."_taille") >= i then
+			zone[i] = lua_zone_climatique[4][1]
+		else
+			zone[i] = lua_zone_climatique[4][2]
+		end
+	end
 	return zone
 end
 
