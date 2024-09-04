@@ -104,10 +104,10 @@ function lua_prepare()
 
 	-- Zones climatiques (land / sea / orbit)
 	lua_zone_climatique = {
-		{"default_espace","default_espace","default_espace","default_espace"},
+		{"default_espace"},
 		{"default_ground", "default_sea", "default_orbit"},
-		{"default_gaz-giant_01","default_gaz-giant_02","default_gaz-giant_03"},
-		{"default_asteroid", "default_asteroid", "default_asteroid", "default_asteroid"}
+		{"default_gaz-giant_01","default_gaz-giant_02","default_gaz-giant_03", "default_orbit"},
+		{"default_asteroid", "default_espace"}
 	}
 
 	
