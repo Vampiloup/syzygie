@@ -20,3 +20,6 @@ max_count = 1024
 [physics]
 max_collision_object_count = 1024
 
+[label]
+max_count = 1024
+

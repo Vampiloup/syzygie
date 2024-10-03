@@ -8,6 +8,7 @@
 	
 function init(self)
 
+	
 	lua_ecrire_systeme(self.id, "ID", self.id)
 	
 	-- Create rotation of star
@@ -27,8 +28,8 @@ function init(self)
 	
 	-- name of the star
 	local name = StarNameGeneration(self.id)
-
 	lua_ecrire_systeme(self.id, "nom", name)
+	label.set_text("Label#label", name)
 	
 	-- Number of Elements in this star systeme
 	nb = 0

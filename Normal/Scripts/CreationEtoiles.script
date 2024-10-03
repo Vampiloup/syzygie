@@ -31,10 +31,11 @@ function init(self)
 				end
 			end				
 		until (distance == true)
-
-
-		idf = factory.create("#factory", pos, nil, { id = self.id }, 1)
+		local props = {}
+		props[hash("/Etoile")] = { id = self.id }
+		local idf = collectionfactory.create("#factory_etoile", pos, nil, props, 1)
 		lua_ecrire_systeme(self.id, "id_instance", idf)
+		--lua_ecrire_systeme(self.id, "ID", self.id)
 		
 		-- populate the Table about star systems
 

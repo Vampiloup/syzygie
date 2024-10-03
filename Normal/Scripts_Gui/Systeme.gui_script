@@ -4,7 +4,7 @@ function init(self)
 	-- Add initialization code here
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
-
+	
 	msg.post(".", "acquire_input_focus")
 
 	
