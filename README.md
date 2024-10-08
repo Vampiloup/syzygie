@@ -1,3 +1,3 @@
 # syzygie
 Strategy game in space like Master of Orion II &amp; Co. And bunnies.
-zoom 0.png
+![08-10-2024](zoom 0.png)
