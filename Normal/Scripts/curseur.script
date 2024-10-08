@@ -140,6 +140,7 @@ function Wheel_Zoom(wheel)
 end
 
 function wheel_Zoom_Elements(comp_url, comp_url2, tmp_Label)
+	pprint(tmp_Label)
 	go.set(comp_url, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
 	go.set(comp_url, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
 	go.set(comp_url2, "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
