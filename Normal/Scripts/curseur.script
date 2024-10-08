@@ -113,15 +113,8 @@ function Wheel_Zoom(wheel)
 					sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 0))
 					sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 1))
 				end
-				go.set(comp_url, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
-				go.set(comp_url, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
-				go.set(comp_url2, "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
-				go.set(comp_url2, "scale.x", 0.25*(math.pow(zoom_gap, -zoom_state)))
-				go.set("/curseur#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
-				go.set("/curseur#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))		
-				go.set(tmp_Label, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
-				go.set(tmp_Label, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
-				end
+				wheel_Zoom_Elements(comp_url, comp_url2, tmp_Label)
+			end
 		elseif wheel == 2 and zoom_state >= zoom_min then
 			wheel = 0
 			for i, id_instance in ipairs(systeme) do
@@ -137,19 +130,23 @@ function Wheel_Zoom(wheel)
 					sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 1))
 					sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 0))
 				end
-				go.set(comp_url, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
-				go.set(comp_url, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
-				go.set(comp_url2, "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
-				go.set(comp_url2, "scale.x", 0.25*(math.pow(zoom_gap, -zoom_state)))
-				go.set("/curseur#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
-				go.set("/curseur#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
-				go.set(tmp_Label, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
-				go.set(tmp_Label, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
+				wheel_Zoom_Elements(comp_url, comp_url2, tmp_Label)
 			end
 		end
 
 	-- Signal to camera.script that Cursor changed stuff from zoom
 	msg.post("/camera", "wheel_retour", {wheel_retour = 0})	
 
+end
+
+function wheel_Zoom_Elements(comp_url, comp_url2, tmp_Label)
+	go.set(comp_url, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
+	go.set(comp_url, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
+	go.set(comp_url2, "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
+	go.set(comp_url2, "scale.x", 0.25*(math.pow(zoom_gap, -zoom_state)))
+	go.set("/curseur#sprite", "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
+	go.set("/curseur#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))		
+	go.set(tmp_Label, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp_Label, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
 end
 
