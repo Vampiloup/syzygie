@@ -67,7 +67,6 @@ function on_input(self, action_id, action)
 		if Gui_entered == nil then
 			-- print (Gui_systeme.orbite_clicked)
 			if self.collision_id ~= nil then
-				pprint (self.collision_id.id)
 				msg.post("/Gui_Systeme#Systeme", "curseur_etoile_click", {id = self.collision_id.id})
 				--self.gui_clicked.systeme_clicked = self.collision_id.id
 			elseif self.collision_id == nil then
@@ -140,7 +139,6 @@ function Wheel_Zoom(wheel)
 end
 
 function wheel_Zoom_Elements(comp_url, comp_url2, tmp_Label)
-	pprint(tmp_Label)
 	go.set(comp_url, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
 	go.set(comp_url, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
 	go.set(comp_url2, "scale.y", 0.25*(math.pow(zoom_gap, -zoom_state)))
@@ -149,6 +147,6 @@ function wheel_Zoom_Elements(comp_url, comp_url2, tmp_Label)
 	go.set("/curseur#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))		
 	go.set(tmp_Label, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
 	go.set(tmp_Label, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
-	go.set(tmp_Label, "position.y", 1*(math.pow(zoom_gap, -zoom_state)))
+--	go.set(tmp_Label, "position.y", 1*(math.pow(zoom_gap, -zoom_state)))
 end
 
