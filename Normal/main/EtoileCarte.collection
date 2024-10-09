@@ -1,11 +1,42 @@
 name: "EtoileCarte"
 instances {
+  id: "EtoileCarte"
+  prototype: "/Normal/Objets/EtoileCarte.go"
+  children: "Etoile"
+  children: "Etoile_Label"
+  children: "Etoile_Orbitaux_1"
+  children: "Etoile_Orbitaux_2"
+  children: "Etoile_Orbitaux_3"
+  children: "Etoile_Orbitaux_4"
+  children: "Etoile_Orbitaux_5"
+}
+instances {
   id: "Etoile"
   prototype: "/Normal/Objets/Etoile.go"
 }
+instances {
+  id: "Etoile_Orbitaux_1"
+  prototype: "/Normal/Objets/Etoile_Orbitaux.go"
+}
+instances {
+  id: "Etoile_Orbitaux_2"
+  prototype: "/Normal/Objets/Etoile_Orbitaux.go"
+}
+instances {
+  id: "Etoile_Orbitaux_3"
+  prototype: "/Normal/Objets/Etoile_Orbitaux.go"
+}
+instances {
+  id: "Etoile_Orbitaux_4"
+  prototype: "/Normal/Objets/Etoile_Orbitaux.go"
+}
+instances {
+  id: "Etoile_Orbitaux_5"
+  prototype: "/Normal/Objets/Etoile_Orbitaux.go"
+}
 scale_along_z: 0
 embedded_instances {
-  id: "Label"
+  id: "Etoile_Label"
   data: "embedded_components {\n"
   "  id: \"label\"\n"
   "  type: \"label\"\n"

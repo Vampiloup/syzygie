@@ -102,17 +102,21 @@ function Wheel_Zoom(wheel)
 			for i, id_instance in ipairs(systeme) do
 				tmp = lua_lire_systeme(i,"id_instance")
 				tmp_Etoile = tmp["/Etoile"]
-				tmp_Label = tmp["/Label"]
+				tmp_Label = tmp["/Etoile_Label"]
+
 				local comp_url = msg.url(nil, tmp_Etoile, "sprite")
 				local comp_url2 = msg.url(nil, tmp_Etoile, "sprite_close")
 				if zoom_state > 5 then
 					sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 1))
 					sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 0))
+					wheel_Zoom_Orbitals("enable", tmp)
 				else
 					sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 0))
 					sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 1))
+					wheel_Zoom_Orbitals("disable", tmp)
 				end
 				wheel_Zoom_Elements(comp_url, comp_url2, tmp_Label)
+				
 			end
 		elseif wheel == 2 and zoom_state >= zoom_min then
 			wheel = 0
@@ -121,15 +125,18 @@ function Wheel_Zoom(wheel)
 				tmp_Etoile = tmp["/Etoile"]
 				local comp_url = msg.url(nil, tmp_Etoile, "sprite")
 				local comp_url2 = msg.url(nil, tmp_Etoile, "sprite_close")
-				tmp_Label = tmp["/Label"]
+				tmp_Label = tmp["/Etoile_Label"]
 				if zoom_state < 6 then
 					sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 0))
 					sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 1))
+					wheel_Zoom_Orbitals("disable", tmp)
 				else
 					sprite.set_constant(comp_url2, "tint", vmath.vector4(1, 1, 1, 1))
 					sprite.set_constant(comp_url, "tint", vmath.vector4(1, 1, 1, 0))
+					wheel_Zoom_Orbitals("enable", tmp)
 				end
 				wheel_Zoom_Elements(comp_url, comp_url2, tmp_Label)
+
 			end
 		end
 
@@ -147,6 +154,34 @@ function wheel_Zoom_Elements(comp_url, comp_url2, tmp_Label)
 	go.set("/curseur#sprite", "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))		
 	go.set(tmp_Label, "scale.y", 1*(math.pow(zoom_gap, -zoom_state)))
 	go.set(tmp_Label, "scale.x", 1*(math.pow(zoom_gap, -zoom_state)))
---	go.set(tmp_Label, "position.y", 1*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp_Label, "position.y", -32*(math.pow(zoom_gap, -zoom_state)))
+end
+
+function wheel_Zoom_Orbitals(temp, tmp)
+	msg.post(tmp["/Etoile_Orbitaux_1"], temp)
+	msg.post(tmp["/Etoile_Orbitaux_2"], temp)
+	msg.post(tmp["/Etoile_Orbitaux_3"], temp)
+	msg.post(tmp["/Etoile_Orbitaux_4"], temp)
+	msg.post(tmp["/Etoile_Orbitaux_5"], temp)
+	go.set(tmp["/Etoile_Orbitaux_1"], "scale.y", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_1"], "scale.x", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_2"], "scale.y", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_2"], "scale.x", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_3"], "scale.y", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_3"], "scale.x", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_4"], "scale.y", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_4"], "scale.x", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_5"], "scale.y", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_5"], "scale.x", 0.50*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_1"], "position.x", 16+zoom_state*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_2"], "position.x", 24+zoom_state*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_3"], "position.x", 32+zoom_state*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_4"], "position.x", 40+zoom_state*(math.pow(zoom_gap, -zoom_state)))
+	go.set(tmp["/Etoile_Orbitaux_5"], "position.x", 48+zoom_state*(math.pow(zoom_gap, -zoom_state)))
+	pprint("*****")
+	pprint (2*(math.pow(zoom_gap, -zoom_state)*32))
+	pprint (2*(math.pow(zoom_gap, -zoom_state)*48))
+	pprint (2*(math.pow(zoom_gap, -zoom_state)*64))
+	pprint (zoom_state)
 end
 

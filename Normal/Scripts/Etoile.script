@@ -29,7 +29,7 @@ function init(self)
 	-- name of the star
 	local name = StarNameGeneration(self.id)
 	lua_ecrire_systeme(self.id, "nom", name)
-	label.set_text("Label#label", name)
+	label.set_text("Etoile_Label#label", name)
 	
 	-- Number of Elements in this star systeme
 	nb = 0
@@ -88,6 +88,14 @@ function init(self)
 		lua_ecrire_systeme(self.id, zone, s)
 		
 	end
+
+	-- Disable by default the Orbitals objects on the map (the player has to zoom in to see them appears).
+	msg.post("Etoile_Orbitaux_1", "disable")
+	msg.post("Etoile_Orbitaux_2", "disable")
+	msg.post("Etoile_Orbitaux_3", "disable")
+	msg.post("Etoile_Orbitaux_4", "disable")
+	msg.post("Etoile_Orbitaux_5", "disable")
+	
 end
 
 
