@@ -178,10 +178,5 @@ function wheel_Zoom_Orbitals(temp, tmp)
 	go.set(tmp["/Etoile_Orbitaux_3"], "position.x", 32+zoom_state*(math.pow(zoom_gap, -zoom_state)))
 	go.set(tmp["/Etoile_Orbitaux_4"], "position.x", 40+zoom_state*(math.pow(zoom_gap, -zoom_state)))
 	go.set(tmp["/Etoile_Orbitaux_5"], "position.x", 48+zoom_state*(math.pow(zoom_gap, -zoom_state)))
-	pprint("*****")
-	pprint (2*(math.pow(zoom_gap, -zoom_state)*32))
-	pprint (2*(math.pow(zoom_gap, -zoom_state)*48))
-	pprint (2*(math.pow(zoom_gap, -zoom_state)*64))
-	pprint (zoom_state)
 end
 

@@ -39,6 +39,7 @@ function init(self)
 	local temp_moderate = math.random(0, couleur_temp[couleur]["chaud"]) + temp_chaud
 	local temperature = 0
 
+	-- Detail of each Orbital content
 	for i = 1, Systeme_Orbits do
 		local orbite = math.random(1, total_orbit_chance[0])
 		orbite_nb = "orbite_"..i
@@ -86,15 +87,24 @@ function init(self)
 		end
 		local zone = orbite_nb.."_zone"
 		lua_ecrire_systeme(self.id, zone, s)
+
+		-- Disable by default the Orbitals objects on the map (the player has to zoom in to see them appears).
+		msg.post("Etoile_Orbitaux_"..i, "disable")
+
+		-- change the default Orbital sprite for "Vide" (none) when there is there nore
+		local anime_to_play = ""
+		if #liste_orbitals[j]["taille"] > 0 then
+			anime_to_play = hash("planet_default")
+		else
+			anime_to_play = hash("orbital_vide")
+		end
+		pprint (anime_to_play)
+		msg.post("Etoile_Orbitaux_"..i, "play_animation", { id = anime_to_play })
 		
 	end
 
-	-- Disable by default the Orbitals objects on the map (the player has to zoom in to see them appears).
-	msg.post("Etoile_Orbitaux_1", "disable")
-	msg.post("Etoile_Orbitaux_2", "disable")
-	msg.post("Etoile_Orbitaux_3", "disable")
-	msg.post("Etoile_Orbitaux_4", "disable")
-	msg.post("Etoile_Orbitaux_5", "disable")
+
+
 	
 end
 

@@ -43,4 +43,7 @@ images {
 images {
   image: "/Normal/Images/systeme/planet_default.png"
 }
+images {
+  image: "/Normal/Images/systeme/orbital_vide.png"
+}
 extrude_borders: 2
